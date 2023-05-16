@@ -1,0 +1,68 @@
+CREATE DATABASE EJ2;
+USE EJ2
+
+CREATE TABLE PROFESOR (
+Legajo int PRIMARY KEY NOT NULL,
+Nombre VARCHAR(30)
+);
+INSERT INTO PROFESOR VALUES (43402, 'VIVIANA PERRONE');
+
+SELECT * FROM PROFESOR;
+
+CREATE TABLE CURSO (
+CodCurso int IDENTITY PRIMARY KEY NOT NULL,
+Nombre VARCHAR(60),
+año int,
+legajo int,
+
+FOREIGN KEY (legajo) REFERENCEs PROFESOR(legajo)
+);
+
+DROP TABLE CURSO; -- DROP TABLE 'NOMBRE DE TABLA' SIRVE PARA BORRAR LAS TABLAS QUE YA SUBI Y LO HICE MAL 
+
+INSERT INTO CURSO VALUES('Entorno  de Programación', 2012, 43402),
+						('Redes', 2014, 43402),
+						('Sistemas Operativos Open-Source', 2013, 43402),
+						('Linux', 2014, 43402);
+
+SELECT * FROM CURSO;
+
+
+CREATE TABLE PUBLICACION (
+ID_Publicacion int IDENTITY PRIMARY KEY NOT NULL,
+Nombre VARCHAR(70),
+Lugar VARCHAR(100),
+Pagina VARCHAR(10),
+Año int,
+legajo int
+
+FOREIGN KEY (legajo) REFERENCES PROFESOR(legajo)
+);
+
+INSERT INTO PUBLICACION VALUES ('Aplicaciones de IA en la interpretacion del lenguaje natural','Revista "Avances en IA"numero 48','34-90', 2012, 43402),
+								('Bases de Datos Para Principiantes','"Revista Tecnología para el Nuevo Mundo, numero 4','41-66',2013,43402);
+
+SELECT * FROM PUBLICACION;
+
+CREATE TABLE ESPECIALIDAD(
+ID_Materia int IDENTITY PRIMARY KEY NOT NULL,
+Nombre VARCHAR(30)
+);
+
+INSERT INTO ESPECIALIDAD VALUES('REDES'),
+								('SISTEMAS OPERATIVOS'),
+								('BASE DE DATOS');
+
+SELECT *FROM ESPECIALIDAD;
+
+CREATE TABLE ESPECIALIDAD_PROFESOR(
+
+PRIMARY KEY(legajo, ID_Materia),
+legajo int,
+ID_Materia int
+
+FOREIGN KEY (legajo) REFERENCES PROFESOR(legajo),
+FOREIGN KEY (ID_Materia) REFERENCES ESPECIALIDAD(ID_Materia)
+);
+
+SELECT * FROM ESPECIALIDAD_PROFESOR;
